@@ -37,7 +37,7 @@ class MusicaController extends Controller
 
     public function updateMusica(Request $request, $id){
         $musica = Musica::find($id);
-        if($musica){
+        if($musica && $request->nombre && $request->duracion && $request->genero && $request->artista){
             $musica->nombre = $request->nombre;
             $musica->duracion = $request->duracion;
             $musica->genero = $request->genero;
@@ -45,7 +45,7 @@ class MusicaController extends Controller
             $musica->save();
             return response()->json(['message' => 'Musica actualizada exitosamente'], 200);
         }else{
-            return response()->json(['message' => 'Musica no encontrada'], 404);
+            return response()->json(['message' => 'Datos incompletos o Musica no encontrada'], 400);
         }
     }
 
